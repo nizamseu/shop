@@ -7,6 +7,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
@@ -37,6 +38,17 @@ const useFirebase = () => {
       .finally(() => setIsLoading(false));
   };
 
+  //update profile
+  const profileUpdate = (name) => {
+    updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: "https://i.ibb.co/17LfyKx/download.png",
+    })
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   //create user using email and password
 
   const createUser = (data) => {
@@ -44,7 +56,8 @@ const useFirebase = () => {
     console.log(email, password);
     createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
-        console.log(result.user);
+        profileUpdate(name);
+        console.log("rr", result);
       })
       .catch((error) => {
         console.log(error);
