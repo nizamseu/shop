@@ -6,10 +6,12 @@ import Home from "./Home/Home/Home";
 import Registration from "./Authentication/Registration";
 import PrivateRoute from "./Authentication/PrivateRoute";
 import Private from "./Components/Private/Private";
+import Navbar from "./Home/Navbar/Navbar";
 function App() {
   return (
     <div>
       <BrowserRouter>
+        <Navbar></Navbar>
         <Routes>
           <Route index element={<Home />} />
           <Route path="/home" element={<Home />} />
