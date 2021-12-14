@@ -52,29 +52,37 @@ const useFirebase = () => {
   //create user using email and password
 
   const createUser = (data) => {
+    setIsLoading(true);
     const { name, email, password } = data;
     console.log(email, password);
     createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
         profileUpdate(name);
-        console.log("rr", result);
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   // login with email and password
-  //     signInWithEmailAndPassword(auth, email, password)
-  //   .then((userCredential) => {
-  //     // Signed in
-  //     const user = userCredential.user;
-  //     // ...
-  //   })
-  //   .catch((error) => {
-  //     const errorCode = error.code;
-  //     const errorMessage = error.message;
-  //   });
+  const login = (data) => {
+    setIsLoading(true);
+    const { email, password } = data;
+    signInWithEmailAndPassword(auth, email, password)
+      .then((result) => {
+        setUser(result.user);
+        navigate(from);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   //    log out
   const logOut = () => {
@@ -98,8 +106,8 @@ const useFirebase = () => {
       setIsLoading(false);
     });
     return unsubscribe;
-  }, []);
-  return { loginWithGoogle, isLoading, logOut, createUser, user };
+  }, [auth]);
+  return { loginWithGoogle, isLoading, logOut, createUser, user, login };
 };
 
 export default useFirebase;
