@@ -8,6 +8,9 @@ import PrivateRoute from "./Authentication/PrivateRoute";
 import Private from "./Components/Private/Private";
 import Navbar from "./Home/Navbar/Navbar";
 import Products from "./Home/Products/Products";
+import CheckOut from "./Components/CheckOut/CheckOut";
+import ProductDetails from "./Home/Products/ProductDetails";
+import Cart from "./Components/Cart/Cart";
 function App() {
   return (
     <div>
@@ -19,6 +22,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/reg" element={<Registration />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/checkout" element={<CheckOut />} />
+          <Route path="/detail/:id" element={<ProductDetails />} />
+          <Route path="/cart" element={<Cart />} />
           <Route
             path="/private"
             element={

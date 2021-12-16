@@ -1,22 +1,35 @@
+import { Container, Grid } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allProducts, setProducts } from "../../Redux/ProductsSlice";
+import ProductsCart from "./ProductsCart";
 
 const Products = () => {
   const products = useSelector((state) => state?.allProducts.products);
   const dispatch = useDispatch();
-  console.log("ami", products);
-
+  console.log("products", products);
   useEffect(() => {
-    axios.get("https://api.npms.io/v2/search?q=react").then((result) => {
-      dispatch(setProducts(result.data.results));
+    axios.get("http://localhost:5000/products").then((result) => {
+      dispatch(setProducts(result.data));
     });
   }, []);
   return (
-    <div>
+    <Grid>
       <h1>Products</h1>
-    </div>
+      <Container>
+        <Grid
+          container
+          spacing={2}
+          sx={{ display: "flex", justifyContent: "center" }}
+        >
+          {products &&
+            products.map((productItem) => (
+              <ProductsCart productItem={productItem}></ProductsCart>
+            ))}
+        </Grid>
+      </Container>
+    </Grid>
   );
 };
 

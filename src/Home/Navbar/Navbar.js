@@ -11,13 +11,26 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import "./navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const pages = ["Home", "Login", "Reg", "Products"];
+import Badge from "@mui/material/Badge";
+import { styled } from "@mui/material/styles";
+import { useSelector } from "react-redux";
+const pages = ["Home", "Login", "Reg", "Products", "CheckOut"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}));
 const Navbar = () => {
+  const cart = useSelector((state) => state?.allProducts.cart);
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -110,10 +123,21 @@ const Navbar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+            <IconButton
+              onClick={() => {
+                navigate("/cart");
+              }}
+              aria-label="cart"
+              sx={{ mr: 3 }}
+            >
+              <StyledBadge badgeContent={cart.length} color="secondary">
+                <ShoppingCartIcon />
+              </StyledBadge>
+            </IconButton>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
-                  alt="Remy Sharp"
+                  alt="Nizam Uddin"
                   src="https://i.ibb.co/17LfyKx/download.png"
                 />
               </IconButton>
