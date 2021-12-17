@@ -19,7 +19,7 @@ import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
 const pages = ["Home", "Login", "Reg", "Products", "CheckOut"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Account", "Dashboard"];
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     right: -3,

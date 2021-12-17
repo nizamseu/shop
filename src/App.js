@@ -11,28 +11,35 @@ import Products from "./Home/Products/Products";
 import CheckOut from "./Components/CheckOut/CheckOut";
 import ProductDetails from "./Home/Products/ProductDetails";
 import Cart from "./Components/Cart/Cart";
+import Dashboard from "./Components/Dashboard/Dashboard/Dashboard";
+import AddProducts from "./Components/Dashboard/AddProducts/AddProducts";
+import Users from "./Components/Dashboard/Users/Users";
 function App() {
   return (
     <div>
       <BrowserRouter>
-        <Navbar></Navbar>
         <Routes>
-          <Route index element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/reg" element={<Registration />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/checkout" element={<CheckOut />} />
-          <Route path="/detail/:id" element={<ProductDetails />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route
-            path="/private"
-            element={
-              <PrivateRoute>
-                <Private />
-              </PrivateRoute>
-            }
-          ></Route>
+          <Route path="/" element={<Home />}>
+            {/* <Route path="/home" element={<Home />} /> */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/reg" element={<Registration />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/checkout" element={<CheckOut />} />
+            <Route path="/detail/:id" element={<ProductDetails />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route
+              path="/private"
+              element={
+                <PrivateRoute>
+                  <Private />
+                </PrivateRoute>
+              }
+            ></Route>
+          </Route>
+          <Route path="/dashboard" element={<Dashboard />}>
+            <Route path="addProducts" element={<AddProducts />} />
+            <Route path="users" element={<Users />} />
+          </Route>
         </Routes>
       </BrowserRouter>
       ,
