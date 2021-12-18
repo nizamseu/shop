@@ -8,7 +8,7 @@ import ProductsCart from "./ProductsCart";
 const Products = () => {
   const products = useSelector((state) => state?.allProducts.products);
   const dispatch = useDispatch();
-  console.log("products", products);
+
   useEffect(() => {
     axios.get("http://localhost:5000/products").then((result) => {
       dispatch(setProducts(result.data));

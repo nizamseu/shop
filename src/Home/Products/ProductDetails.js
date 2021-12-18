@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { addToCart } from "../../Redux/ProductsSlice";
+import QuantityAdder from "../../utility/QuantityAdder";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -12,7 +13,7 @@ const ProductDetails = () => {
   const product = useSelector((state) => state?.allProducts.products);
 
   const singleProduct = product && product.find((item) => item._id == id);
-  const { title, description, image, price, category } = singleProduct;
+  const { title, description, image, price, category, _id } = singleProduct;
 
   const handleAddToCart = (item) => {
     dispatch(addToCart(item));
@@ -69,7 +70,7 @@ const ProductDetails = () => {
                 readOnly
               />
             </Box>
-
+            <QuantityAdder pId={_id}></QuantityAdder>
             <Typography sx={{ textAlign: "justify" }} variant="h6">
               {description}
             </Typography>

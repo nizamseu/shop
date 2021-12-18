@@ -17,9 +17,16 @@ const ProductsCart = ({ productItem }) => {
 
   return (
     <Grid item xs={12} sm={9} md={6} lg={4}>
-      <Link to={`/detail/${_id}`}>
-        <Paper sx={{ margin: "10px", p: 2 }} elevation={10}>
-          {/* products images  */}
+      <Paper
+        sx={{
+          margin: "10px",
+          p: 2,
+          a: { textDecoration: "none", color: "black" },
+        }}
+        elevation={10}
+      >
+        {/* products images  */}
+        <Link to={`/detail/${_id}`}>
           <Box>
             <img width="100%" height="300px" src={image} alt="" />
           </Box>
@@ -30,16 +37,15 @@ const ProductsCart = ({ productItem }) => {
             <h3>Price: ${price}</h3>
             {/* <p>{description}</p> */}
           </Box>
-
-          <Button
-            sx={{ mt: 2 }}
-            onClick={() => handleAddToCart(productItem)}
-            variant="contained"
-          >
-            Add to Cart
-          </Button>
-        </Paper>
-      </Link>
+        </Link>
+        <Button
+          sx={{ mt: 2 }}
+          onClick={() => handleAddToCart(productItem)}
+          variant="contained"
+        >
+          Add to Cart
+        </Button>
+      </Paper>
     </Grid>
   );
 };
