@@ -1,19 +1,15 @@
-import {
-  Button,
-  Container,
-  Grid,
-  Paper,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { Button, Container, Grid, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart } from "../../Redux/ProductsSlice";
+import { addToCart, removeFromCart } from "../../Redux/ProductsSlice";
 import EmptyCart from "../../utility/EmptyCart";
+import { Link, useNavigate } from "react-router-dom";
+
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 const Cart = () => {
+  const navigate = useNavigate();
   const [cart, setCart] = useState(
     useSelector((state) => state?.allProducts.cart)
   );
@@ -26,14 +22,38 @@ const Cart = () => {
   };
 
   const incrementQT = (item) => {
-    const rest = cart.find((i) => i._id === item);
-    console.log(rest);
+    let rest = cart.find((i) => i._id === item);
+    const data = JSON.parse(JSON.stringify(rest));
+    const remaing = cart.filter((i) => i._id !== item);
+
+    data.quantity += 1;
+
+    const newData = [...remaing, data];
+
+    dispatch(addToCart(newData));
+    setCart(newData);
+
+    console.log(data);
   };
   const decrementQT = (item) => {
-    const rest = cart.find((i) => i._id === item);
-    console.log(rest);
+    let rest = cart.find((i) => i._id === item);
+    const data = JSON.parse(JSON.stringify(rest));
+    const remaing = cart.filter((i) => i._id !== item);
+    const newData = [...remaing, data];
+
+    if (data.quantity > 1) {
+      data.quantity -= 1;
+      dispatch(addToCart(newData));
+      setCart(newData);
+    } else {
+      data.quantity = 1;
+      dispatch(addToCart(newData));
+      setCart(newData);
+    }
   };
 
+  const total = cart.reduce((a, b) => a + b.price * b.quantity, 0);
+  console.log("Total", total);
   return (
     <Container>
       {cart.length > 0 ? (
@@ -69,10 +89,10 @@ const Cart = () => {
                     },
                   }}
                 >
-                  <Box>
+                  <Grid item xs={12} md={4}>
                     <img width="150px" height="150px" src={item.image} alt="" />
-                  </Box>
-                  <Box sx={{ m: 3 }}>
+                  </Grid>
+                  <Grid sx={{ m: 3 }} item xs={12} md={8}>
                     <h5>{item.title}</h5>
                     <Button
                       onClick={() => {
@@ -81,7 +101,7 @@ const Cart = () => {
                     >
                       Remove
                     </Button>
-                  </Box>
+                  </Grid>
                 </Box>
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -105,25 +125,25 @@ const Cart = () => {
                       fontSize: "20px",
                     }}
                   >
-                    <IconButton
+                    {/* <IconButton
                       onClick={() => incrementQT(item._id)}
                       sx={{ mr: 3 }}
                     >
                       <AddIcon />
-                    </IconButton>
+                    </IconButton> */}
 
                     <Typography sx={{ fontSize: "25px" }}>
-                      {" "}
-                      {item.price}
+                      QYT: {item.quantity}
                     </Typography>
-                    <IconButton
+
+                    {/* <IconButton
                       onClick={() => decrementQT(item._id)}
                       sx={{ ml: 3 }}
                     >
                       <RemoveIcon />
-                    </IconButton>
+                    </IconButton> */}
                   </Box>
-                  <h1>${item.price}</h1>
+                  <h1>${(item.price * item.quantity).toFixed(2)}</h1>
                 </Box>
               </Grid>
             </Paper>
@@ -132,6 +152,26 @@ const Cart = () => {
       ) : (
         <EmptyCart></EmptyCart>
       )}
+
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          float: "right",
+          marginRight: "20px",
+        }}
+      >
+        <h1>Total Amount: ${total.toFixed(2)}</h1>
+        <p style={{ marginTop: "-20px" }}>
+          Taxes and shipping calculated at checkout
+        </p>
+        <Button sx={{ my: 3 }} variant="contained">
+          <Link sx={{ textDecoration: "none", color: "white" }} to="/CheckOut">
+            {" "}
+            CheckOut
+          </Link>
+        </Button>
+      </Box>
     </Container>
   );
 };

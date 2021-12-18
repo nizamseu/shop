@@ -1,22 +1,50 @@
-import { Button, Container, Grid, Rating, Typography } from "@mui/material";
+import {
+  IconButton,
+  Button,
+  Container,
+  Grid,
+  Rating,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { addToCart } from "../../Redux/ProductsSlice";
-import QuantityAdder from "../../utility/QuantityAdder";
-
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 const ProductDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const product = useSelector((state) => state?.allProducts.products);
+
+  const product = useSelector((state) => state?.allProducts?.products);
 
   const singleProduct = product && product.find((item) => item._id == id);
-  const { title, description, image, price, category, _id } = singleProduct;
+
+  const [restProduct, setRestProduct] = useState(singleProduct);
+
+  const { title, description, image, price, category, quantity } = restProduct;
 
   const handleAddToCart = (item) => {
+    console.log("from Add to cart", item);
     dispatch(addToCart(item));
+  };
+
+  const handleQuantityAdd = () => {
+    const data = JSON.parse(JSON.stringify(restProduct));
+    data.quantity += 1;
+    setRestProduct(data);
+  };
+
+  const handleQuantityMinus = () => {
+    const data = JSON.parse(JSON.stringify(restProduct));
+    if (data.quantity > 1) {
+      data.quantity -= 1;
+      setRestProduct(data);
+    } else {
+      data.quantity = 1;
+      setRestProduct(data);
+    }
   };
   return (
     <Container>
@@ -70,12 +98,27 @@ const ProductDetails = () => {
                 readOnly
               />
             </Box>
-            <QuantityAdder pId={_id}></QuantityAdder>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                fontSize: "20px",
+              }}
+            >
+              <IconButton onClick={() => handleQuantityAdd()} sx={{ mr: 3 }}>
+                <AddIcon />
+              </IconButton>
+
+              <Typography sx={{ fontSize: "25px" }}>{quantity}</Typography>
+              <IconButton onClick={() => handleQuantityMinus()} sx={{ ml: 3 }}>
+                <RemoveIcon />
+              </IconButton>
+            </Box>
             <Typography sx={{ textAlign: "justify" }} variant="h6">
               {description}
             </Typography>
             <Button
-              onClick={handleAddToCart}
+              onClick={() => handleAddToCart(restProduct)}
               sx={{ my: 3 }}
               variant="contained"
               color="error"
