@@ -24,7 +24,13 @@ export const ProductsSlice = createSlice({
       state.products = action.payload;
     },
     addToCart: (state, action) => {
-      state.cart = [...state.cart, action.payload];
+      const rest = [...state.cart, action.payload];
+      const key = "_id";
+      const arrayUniqueByKey = [
+        ...new Map(rest.map((item) => [item[key], item])).values(),
+      ];
+
+      state.cart = arrayUniqueByKey;
     },
     removeFromCart: (state, action) => {
       console.log(action.payload);
