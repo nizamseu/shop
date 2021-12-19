@@ -2,6 +2,7 @@ import { Button, Container, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import "./reg.css";
 const Registration = () => {
@@ -26,7 +27,7 @@ const Registration = () => {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
-        border: "1px solid gray",
+        // border: "1px solid gray",
         width: { xs: "100%", sm: "80%", md: "30rem" },
       }}
     >
@@ -74,6 +75,7 @@ const Registration = () => {
               REG
             </Button>
           </form>
+          <Link to={"/login"}>Already have an Account</Link>
         </Box>
       </Box>
     </Container>

@@ -14,32 +14,43 @@ import Cart from "./Components/Cart/Cart";
 import Dashboard from "./Components/Dashboard/Dashboard/Dashboard";
 import AddProducts from "./Components/Dashboard/AddProducts/AddProducts";
 import Users from "./Components/Dashboard/Users/Users";
+import Common from "./Home/Home/Common";
+import Shipping from "./Components/Shipping/Shipping";
 function App() {
   return (
     <div>
       <BrowserRouter>
+        <Navbar></Navbar>
         <Routes>
-          <Route path="/" element={<Home />}>
-            {/* <Route path="/home" element={<Home />} /> */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/reg" element={<Registration />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/checkout" element={<CheckOut />} />
-            <Route path="/detail/:id" element={<ProductDetails />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route
-              path="/private"
-              element={
-                <PrivateRoute>
-                  <Private />
-                </PrivateRoute>
-              }
-            ></Route>
-          </Route>
-          <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="/" element={<Home />} />
+          {/* <Route path="/products" element={<Home />} /> */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/reg" element={<Registration />} />
+          <Route path="/products" element={<Products />} />
+          <Route
+            path="/checkout"
+            element={
+              <PrivateRoute>
+                <CheckOut />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/detail/:id" element={<ProductDetails />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/shipping" element={<Shipping />} />
+          <Route
+            path="/private"
+            element={
+              <PrivateRoute>
+                <Private />
+              </PrivateRoute>
+            }
+          ></Route>
+
+          {/* <Route path="/dashboard" element={<Dashboard />}>
             <Route path="addProducts" element={<AddProducts />} />
             <Route path="users" element={<Users />} />
-          </Route>
+          </Route> */}
         </Routes>
       </BrowserRouter>
       ,

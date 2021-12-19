@@ -33,7 +33,9 @@ export const ProductsSlice = createSlice({
       state.cart = arrayUniqueByKey;
     },
     removeFromCart: (state, action) => {
-      console.log(action.payload);
+      state.cart = action.payload;
+    },
+    clearCart: (state, action) => {
       state.cart = action.payload;
     },
   },
@@ -46,6 +48,7 @@ export const {
   incrementQT,
   decrementQT,
   removeFromCart,
+  clearCart,
 } = ProductsSlice.actions;
 
 export default ProductsSlice.reducer;

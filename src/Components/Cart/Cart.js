@@ -148,30 +148,32 @@ const Cart = () => {
               </Grid>
             </Paper>
           ))}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              float: "right",
+              marginRight: "20px",
+            }}
+          >
+            <h1>Total Amount: ${total.toFixed(2)}</h1>
+            <p style={{ marginTop: "-20px" }}>
+              Taxes and shipping calculated at checkout
+            </p>
+            <Button sx={{ my: 3 }} variant="contained">
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                to="/CheckOut"
+              >
+                {" "}
+                CheckOut
+              </Link>
+            </Button>
+          </Box>
         </Grid>
       ) : (
         <EmptyCart></EmptyCart>
       )}
-
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          float: "right",
-          marginRight: "20px",
-        }}
-      >
-        <h1>Total Amount: ${total.toFixed(2)}</h1>
-        <p style={{ marginTop: "-20px" }}>
-          Taxes and shipping calculated at checkout
-        </p>
-        <Button sx={{ my: 3 }} variant="contained">
-          <Link sx={{ textDecoration: "none", color: "white" }} to="/CheckOut">
-            {" "}
-            CheckOut
-          </Link>
-        </Button>
-      </Box>
     </Container>
   );
 };

@@ -1,16 +1,16 @@
-import { Box } from "@mui/system";
 import React from "react";
+
 import { Outlet } from "react-router";
 import Navbar from "../Navbar/Navbar";
 import Products from "../Products/Products";
-import Common from "./Common";
 
-const Home = () => {
+const Common = ({ children }) => {
   return (
     <div>
-      <Products></Products>
+      {/* {children} */}
+      <Outlet></Outlet>
     </div>
   );
 };
 
-export default Home;
+export default Common;

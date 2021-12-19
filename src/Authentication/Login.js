@@ -5,6 +5,7 @@ import { Button, Container, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useForm } from "react-hook-form";
 import useAuth from "../Hooks/useAuth";
+import { Link } from "react-router-dom";
 const Login = () => {
   const location = useLocation();
 
@@ -29,7 +30,7 @@ const Login = () => {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
-        border: "1px solid gray",
+        // border: "1px solid gray",
         width: { xs: "100%", sm: "80%", md: "30rem" },
       }}
     >
@@ -80,8 +81,14 @@ const Login = () => {
           </form>
         </Box>
       </Box>
-      <Button onClick={() => loginWithGoogle()}>Google</Button>
-      <Button onClick={() => logOut()}>LOgOUt</Button>
+      <Button
+        sx={{ width: "100%", marginTop: "-10px" }}
+        variant="contained"
+        onClick={() => loginWithGoogle()}
+      >
+        Google
+      </Button>
+      <Link to={"/reg"}>Create an Account</Link>
     </Container>
   );
 };

@@ -14,11 +14,11 @@ import MenuItem from "@mui/material/MenuItem";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import "./navbar.css";
 import { Link, useNavigate } from "react-router-dom";
-
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
-const pages = ["Home", "Login", "Reg", "Products", "CheckOut"];
+import useAuth from "../../Hooks/useAuth";
+const pages = ["Products", "Login", "Reg", "Cart"];
 const settings = ["Profile", "Account", "Dashboard"];
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -30,6 +30,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 const Navbar = () => {
   const cart = useSelector((state) => state?.allProducts.cart);
+  const { user, logOut } = useAuth();
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -121,7 +122,7 @@ const Navbar = () => {
               </Button>
             ))}
           </Box>
-
+          <Typography>{user.email && user.displayName}</Typography>
           <Box sx={{ flexGrow: 0 }}>
             <IconButton
               onClick={() => {
@@ -134,13 +135,20 @@ const Navbar = () => {
                 <ShoppingCartIcon />
               </StyledBadge>
             </IconButton>
+
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar
-                  alt="Nizam Uddin"
-                  src="https://i.ibb.co/17LfyKx/download.png"
-                />
-              </IconButton>
+              {user.email && user.email ? (
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar
+                    alt={user.displayName}
+                    src={user.email && user.photoURL}
+                  />
+                </IconButton>
+              ) : (
+                <Link style={{ textDecoration: "none" }} to={"/login"}>
+                  <Button variant="contained">Login</Button>
+                </Link>
+              )}
             </Tooltip>
             <Menu
               className="setting"
@@ -167,7 +175,9 @@ const Navbar = () => {
                 </MenuItem>
               ))}
               <MenuItem>
-                <Button textAlign="center">LogOut</Button>
+                <Button onClick={() => logOut()} textAlign="center">
+                  LogOut
+                </Button>
               </MenuItem>
             </Menu>
           </Box>
