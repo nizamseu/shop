@@ -10,9 +10,7 @@
 #### Stripe Payment Gateway
 
 
-###Firebase Authentication System
-
-
+### Firebase Authentication System
 I  use the Firebase Authentication system for this ecommerce website. There are two types of authentication. One is Using gmail account and another is using email and password .You can register this system using two ways. 
 
 ### React Router 6 is an interesting update. Especially Nesting routing and redirects. Redicet feature is easier than version 5. I used a new version of React router here .
